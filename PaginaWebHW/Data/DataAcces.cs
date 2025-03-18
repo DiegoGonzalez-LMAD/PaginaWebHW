@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PaginaWebHW.Entities;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
@@ -48,16 +49,40 @@ namespace PaginaWebHW.Data
                 using (SqlCommand cmd = new SqlCommand())
                 {
                     cmd.Connection = conn;
-                    cmd.CommandType = CommandType.Text;
-
-                    // ✅ Ejecutar la función como una consulta SELECT
-                    cmd.CommandText = $"SELECT dbo.{functionName}({string.Join(",", SQLParams.Select(p => p.ParameterName))})";
+                    cmd.CommandType = CommandType.Text;                    
+                    cmd.CommandText = $"SELECT * from dbo.{functionName}({string.Join(",", SQLParams.Select(p => p.ParameterName))})";
                     cmd.Parameters.AddRange(SQLParams);
 
                     try
                     {
                         conn.Open();
-                        return cmd.ExecuteScalar(); // Devuelve el valor BIT de la función (1 o 0)
+                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        {
+                            if (reader.HasRows)
+                            {
+                                if (reader.Read())
+                                {
+                                    return new ET_Usuario
+                                    {
+                                        id_Usuario = Convert.ToInt32(reader["id_Usuario"]),
+                                        nombreUsuario = reader["nombreUsuario"].ToString(),
+                                        correoElectronico = reader["correoElectronico"].ToString(),
+                                        contrasenia = reader["contrasenia"].ToString()
+                                    };
+                                }
+                                else
+                                {
+                                    return null;
+                                }
+                            }
+                            else
+                            {
+                                return null ;
+                            }
+                           
+                            
+                        } 
+                        
                     }
                     catch (Exception ex)
                     {

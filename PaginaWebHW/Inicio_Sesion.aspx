@@ -40,9 +40,9 @@
             <label style="color:#0172b6;">Pagina creada por Diego Gonzalez, Derechos Reservados.</label>
         </form>     
     </div>
-    <script src="~/Scripts/jquery-3.5.1.min.js"></script>
-    <script src="~/Scripts/popper.min.js"></script>
-    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="/Scripts/jquery-3.5.1.min.js"></script>
+    <script src="/Scripts/popper.min.js"></script>
+    <script src="/Scripts/bootstrap.min.js"></script>
     
 </body>
 </html>

@@ -10,7 +10,7 @@ namespace PaginaWebHW.Entities
         #region Propiedades
         public int id_Usuario {  get; set; }
         public string nombreUsuario {  get; set; }
-        public string conrasenia {  get; set; }
+        public string contrasenia {  get; set; }
         public string correoElectronico { get; set; }
 
         #endregion
@@ -18,7 +18,7 @@ namespace PaginaWebHW.Entities
         public ET_Usuario(string aux_nombreUsuario,string aux_contrasenia,string aux_correoElectronico) {
         
             nombreUsuario=aux_nombreUsuario;
-            conrasenia=aux_contrasenia;
+            contrasenia=aux_contrasenia;
             correoElectronico=aux_correoElectronico;
         }
 

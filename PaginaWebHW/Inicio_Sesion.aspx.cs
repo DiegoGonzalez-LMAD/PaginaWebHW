@@ -1,4 +1,5 @@
 ﻿using PaginaWebHW.Data;
+using PaginaWebHW.Entities;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -13,7 +14,11 @@ namespace PaginaWebHW
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            if (Session["NombreUsuario"] != null)
+            {
+                Response.Redirect("PaginaPrincipal.aspx");
+            }
+            
         }
 
         protected void IniciarSesion(object sender, EventArgs e)
@@ -29,12 +34,13 @@ namespace PaginaWebHW
                         
 
                 };
-
-                var resultado = myDB.ExecuteFunction("InicioDeSesion", paramsInicioSesion);
-                bool login = (bool)resultado;
-                if (resultado != null && Convert.ToBoolean(resultado))
+                ET_Usuario usuario = (ET_Usuario)myDB.ExecuteFunction("InicioDeSesion", paramsInicioSesion);
+                if (usuario != null)
                 {
-                    Response.Write("<script>alert('Usuario encontrado con éxito');</script>");
+                    Session["NombreUsuario"]=usuario.nombreUsuario;
+                    Session["CorreoElectronico"]=usuario.correoElectronico;
+                    Session["IdUsuario"]=usuario.id_Usuario;
+                    Response.Redirect("PaginaPrincipal.aspx");
                 }
                 else {
                     Response.Write("<script>alert('Usuario no encontrado ');</script>");
